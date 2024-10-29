@@ -1,0 +1,42 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  padding: 20px;
+}
+
+body {
+  margin: 0;
+}
+
+h1 {
+  font-size: 48px;
+  line-height: 1.2;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid gray;
+  padding: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s ease;
+  background-color: #ffffff;
+}
+
+button:hover {
+  border-color: orange;
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto orange;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}

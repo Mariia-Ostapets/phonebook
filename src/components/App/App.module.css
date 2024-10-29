@@ -1,0 +1,10 @@
+.phonebookTitle {
+  color: orange;
+  text-align: center;
+}
+
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
