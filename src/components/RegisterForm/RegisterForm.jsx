@@ -1,40 +1,88 @@
-import { useDispatch } from "react-redux";
-import { register } from "../../redux/auth/operations";
+import { useDispatch, useSelector } from "react-redux";
+import { register, clearError } from "../../redux/auth/operations";
 import css from "./RegisterForm.module.css";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+
+const initialValues = { name: "", email: "", password: "" };
+
+const FeedbackSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(3, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Required"),
+  email: Yup.string().email().required("Required"),
+  password: Yup.string()
+    .min(8, "The password must consist of at least 8 characters!")
+    .required("Required"),
+});
 
 export const RegisterForm = () => {
   const dispatch = useDispatch();
+  const error = useSelector((state) => state.auth.error);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const form = e.target;
-
+  const handleSubmit = (values, actions) => {
+    dispatch(clearError());
     dispatch(
       register({
-        name: form.elements.name.value,
-        email: form.elements.email.value,
-        password: form.elements.password.value,
+        name: values.name,
+        email: values.email,
+        password: values.password,
       })
-    );
+    )
+      .unwrap()
+      .then(() => {
+        actions.resetForm();
+      })
+      .catch(() => {
+        console.log("Email is already in use");
+      });
 
-    form.reset();
+    actions.resetForm();
   };
 
   return (
-    <form className={css.form} onSubmit={handleSubmit} autoComplete="off">
-      <label className={css.label}>
-        Username
-        <input type="text" name="name" />
-      </label>
-      <label className={css.label}>
-        Email
-        <input type="email" name="email" />
-      </label>
-      <label className={css.label}>
-        Password
-        <input type="password" name="password" />
-      </label>
-      <button type="submit">Register</button>
-    </form>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={handleSubmit}
+      validationSchema={FeedbackSchema}
+    >
+      <Form className={css.form}>
+        <label className={css.label} htmlFor="name">
+          Username
+        </label>
+        <Field className={css.field} type="text" name="name" id="name" />
+        <ErrorMessage
+          className={css.error}
+          name="name"
+          component="div"
+        ></ErrorMessage>
+        <label className={css.label} htmlFor="email">
+          Email
+        </label>
+        <Field className={css.field} type="email" name="email" id="email" />
+        <ErrorMessage
+          className={css.error}
+          name="email"
+          component="div"
+        ></ErrorMessage>
+        {error && <div className={css.error}>{error}</div>}
+        <label className={css.label} htmlFor="password">
+          Password
+        </label>
+        <Field
+          className={css.field}
+          type="password"
+          name="password"
+          id="password"
+        />
+        <ErrorMessage
+          className={css.error}
+          name="password"
+          component="div"
+        ></ErrorMessage>
+        <button type="submit">Register</button>
+      </Form>
+    </Formik>
   );
 };

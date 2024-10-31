@@ -2,8 +2,40 @@
   width: 320px;
 }
 
-.label {
+.form {
   display: flex;
   flex-direction: column;
-  margin-bottom: 16px;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 12px;
+}
+
+.label {
+  align-self: flex-start;
+}
+
+.field {
+  width: 100%;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 4px;
+  transition: border-color 0.25s ease;
+}
+
+.field:hover {
+  border-color: orange;
+}
+
+.field:focus,
+.field:focus-visible {
+  outline: 4px auto orange;
+}
+
+.error {
+  display: flex;
+  justify-content: flex-start;
+  color: red;
+  font-size: 12px;
 }

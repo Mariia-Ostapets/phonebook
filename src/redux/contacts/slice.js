@@ -9,9 +9,13 @@ export const selectFilteredContacts = createSelector(
     if (!nameFilter) {
       return contacts;
     }
-    return contacts.filter((contact) =>
-      contact.name.toLowerCase().includes(nameFilter.toLowerCase())
-    );
+    return contacts.filter((contact) => {
+      const nameMatches = contact.name
+        .toLowerCase()
+        .includes(nameFilter.toLowerCase());
+      const numberMatches = contact.number.includes(nameFilter.toLowerCase());
+      return nameMatches || numberMatches;
+    });
   }
 );
 
@@ -55,6 +59,8 @@ const contactsSlice = createSlice({
           (contact) => contact.id === action.payload.id
         );
         state.items.splice(index, 1);
+        state.isModalOpen = false;
+        state.contactIdToDelete = null;
       })
       .addCase(deleteContact.rejected, handleRejected);
   },

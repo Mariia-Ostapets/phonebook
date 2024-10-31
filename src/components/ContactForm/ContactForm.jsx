@@ -12,8 +12,10 @@ const FeedbackSchema = Yup.object().shape({
     .max(50, "Too Long!")
     .required("Required"),
   number: Yup.string()
-    .min(3, "Too Short!")
-    .max(15, "Too Long!")
+    .matches(
+      /^\+\d{2} \(\d{3}\) \d{3}-\d{2}-\d{2}$/,
+      "Phone number must be in the format +XX (XXX) XXX-XX-XX"
+    )
     .required("Required"),
 });
 
@@ -37,15 +39,20 @@ export default function ContactForm() {
       validationSchema={FeedbackSchema}
     >
       <Form className={css.form}>
-        <label htmlFor="name">Name</label>
+        <label className={css.label} htmlFor="name">
+          Name
+        </label>
         <Field className={css.field} type="text" name="name" id="name"></Field>
         <ErrorMessage className={css.error} name="name" component="div" />
-        <label htmlFor="number">Number</label>
+        <label className={css.label} htmlFor="number">
+          Number
+        </label>
         <Field
           className={css.field}
           type="text"
           name="number"
           id="number"
+          placeholder="+XX (XXX) XXX-XX-XX"
         ></Field>
         <ErrorMessage className={css.error} name="number" component="div" />
         <button type="submit">Add contact</button>

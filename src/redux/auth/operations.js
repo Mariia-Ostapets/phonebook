@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, createAction } from "@reduxjs/toolkit";
 
 axios.defaults.baseURL = "https://connections-api.goit.global";
 
@@ -27,7 +27,10 @@ export const register = createAsyncThunk(
       return res.data;
     } catch (error) {
       if (error.response && error.response.data.code === 11000) {
-        return thunkAPI.rejectWithValue("Email is already in use.");
+        const existingEmail = error.response.data.keyValue.email;
+        return thunkAPI.rejectWithValue(
+          `Email ${existingEmail} is already in use`
+        );
       }
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -47,6 +50,9 @@ export const logIn = createAsyncThunk(
       setAuthHeader(res.data.token);
       return res.data;
     } catch (error) {
+      if (error.response && error.response.status === 401) {
+        return thunkAPI.rejectWithValue("Incorrect email or password.");
+      }
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -92,3 +98,5 @@ export const refreshUser = createAsyncThunk(
     }
   }
 );
+
+export const clearError = createAction("auth/clearError");
