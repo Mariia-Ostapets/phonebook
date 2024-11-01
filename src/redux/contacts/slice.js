@@ -1,5 +1,10 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
-import { fetchContacts, addContact, deleteContact } from "./operations";
+import {
+  fetchContacts,
+  addContact,
+  deleteContact,
+  updateContact,
+} from "./operations";
 import { selectNameFilter } from "../filters/selectors";
 import { selectContacts } from "./selectors";
 
@@ -34,6 +39,28 @@ const contactsSlice = createSlice({
     items: [],
     loading: false,
     error: null,
+    isModalOpen: false,
+    contactIdToDelete: null,
+    isEditModalOpen: false,
+    contactToEdit: null,
+  },
+  reducers: {
+    openModal(state, action) {
+      state.isModalOpen = true;
+      state.contactIdToDelete = action.payload;
+    },
+    closeModal(state) {
+      state.isModalOpen = false;
+      state.contactIdToDelete = null;
+    },
+    openEditModal(state, action) {
+      state.isEditModalOpen = true;
+      state.contactToEdit = action.payload;
+    },
+    closeEditModal(state) {
+      state.isEditModalOpen = false;
+      state.contactToEdit = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -62,8 +89,23 @@ const contactsSlice = createSlice({
         state.isModalOpen = false;
         state.contactIdToDelete = null;
       })
-      .addCase(deleteContact.rejected, handleRejected);
+      .addCase(deleteContact.rejected, handleRejected)
+      .addCase(updateContact.pending, handlePending)
+      .addCase(updateContact.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        const index = state.items.findIndex(
+          (contact) => contact.id === action.payload.id
+        );
+        if (index !== -1) {
+          state.items[index] = action.payload;
+        }
+      })
+      .addCase(updateContact.rejected, handleRejected);
   },
 });
+
+export const { openModal, closeModal, openEditModal, closeEditModal } =
+  contactsSlice.actions;
 
 export const contactsReducer = contactsSlice.reducer;

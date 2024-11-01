@@ -2,7 +2,7 @@ import css from "./ContactForm.module.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import { addContact } from "../../redux/contacts/operations";
+import { addContact, updateContact } from "../../redux/contacts/operations";
 
 const initialValues = { name: "", number: "" };
 
@@ -19,17 +19,25 @@ const FeedbackSchema = Yup.object().shape({
     .required("Required"),
 });
 
-export default function ContactForm() {
+export default function ContactForm({
+  initialValues = { name: "", number: "" },
+  isEditMode = false,
+  contactId,
+}) {
   const dispatch = useDispatch();
 
   const handleSubmit = (values, actions) => {
-    dispatch(
-      addContact({
-        name: values.name,
-        number: values.number,
-      })
-    );
-    actions.resetForm();
+    if (isEditMode) {
+      dispatch(updateContact({ contactId, ...values }));
+    } else {
+      dispatch(
+        addContact({
+          name: values.name,
+          number: values.number,
+        })
+      );
+      actions.resetForm();
+    }
   };
 
   return (
@@ -55,7 +63,9 @@ export default function ContactForm() {
           placeholder="+XX (XXX) XXX-XX-XX"
         ></Field>
         <ErrorMessage className={css.error} name="number" component="div" />
-        <button type="submit">Add contact</button>
+        <button type="submit">
+          {isEditMode ? "Update contact" : "Add contact"}
+        </button>
       </Form>
     </Formik>
   );
