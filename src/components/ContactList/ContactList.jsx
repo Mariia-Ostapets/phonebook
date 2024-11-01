@@ -50,13 +50,11 @@ export default function ContactList() {
           </li>
         ))}
       </ul>
-      {isModalOpen && (
-        <ConfirmModal
-          isOpen={isModalOpen}
-          onRequestClose={handleCloseModal}
-          onConfirm={confirmDelete}
-        />
-      )}
+      <ConfirmModal
+        isOpen={isModalOpen}
+        onRequestClose={handleCloseModal}
+        onConfirm={confirmDelete}
+      />
       <Toaster />
       <EditContactForm />
     </>
