@@ -5,6 +5,7 @@ import {
   selectFilteredContacts,
   openModal,
   closeModal,
+  closeEditModal,
 } from "../../redux/contacts/slice";
 import { deleteContact } from "../../redux/contacts/operations";
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
@@ -18,8 +19,14 @@ export default function ContactList() {
   const contactIdToDelete = useSelector(
     (state) => state.contacts.contactIdToDelete
   );
+  const isEditModalOpen = useSelector(
+    (state) => state.contacts.isEditModalOpen
+  );
 
   const handleDeleteClick = (contactId) => {
+    if (isEditModalOpen) {
+      dispatch(closeEditModal());
+    }
     if (!isModalOpen) {
       dispatch(openModal(contactId));
     }

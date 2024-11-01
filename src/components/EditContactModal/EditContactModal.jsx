@@ -20,6 +20,7 @@ export default function EditContactModal() {
       className={css.modal}
       isOpen={isEditModalOpen}
       onRequestClose={closeModal}
+      ariaHideApp={false}
     >
       <h2 className={css.modalTitle}>Edit Contact</h2>
       {contactToEdit && (

@@ -100,6 +100,8 @@ const contactsSlice = createSlice({
         if (index !== -1) {
           state.items[index] = action.payload;
         }
+        state.isModalOpen = false;
+        state.contactIdToDelete = null;
       })
       .addCase(updateContact.rejected, handleRejected);
   },
