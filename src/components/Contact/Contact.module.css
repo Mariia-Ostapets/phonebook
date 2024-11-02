@@ -1,6 +1,6 @@
 .contactCard {
   border: 1px solid black;
-  border-radius: 4px;
+  border-radius: 8px;
   padding: 12px;
   display: flex;
   align-items: center;
