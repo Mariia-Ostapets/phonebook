@@ -1,8 +1,10 @@
-import css from "./Contact.module.css";
 import { AiOutlineUser } from "react-icons/ai";
 import { AiOutlinePhone } from "react-icons/ai";
+import { MdOutlineEdit } from "react-icons/md";
+import { MdDeleteOutline } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { openModal, openEditModal } from "../../redux/contacts/slice";
+import css from "./Contact.module.css";
 
 export default function Contact({ contact }) {
   const dispatch = useDispatch();
@@ -27,12 +29,14 @@ export default function Contact({ contact }) {
           {contact.number}
         </p>
       </div>
-      <button className={css.btn} onClick={handleEdit}>
-        Edit
-      </button>
-      <button className={css.btn} onClick={handleDelete}>
-        Delete
-      </button>
+      <div className={css.btnWrapper}>
+        <button className={css.btn} onClick={handleEdit}>
+          Edit <MdOutlineEdit size={16} />
+        </button>
+        <button className={css.btn} onClick={handleDelete}>
+          Delete <MdDeleteOutline size={16} />
+        </button>
+      </div>
     </div>
   );
 }

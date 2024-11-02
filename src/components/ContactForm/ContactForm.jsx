@@ -3,8 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { addContact, updateContact } from "../../redux/contacts/operations";
-
-const initialValues = { name: "", number: "" };
+import { closeModal, closeEditModal } from "../../redux/contacts/slice";
 
 const FeedbackSchema = Yup.object().shape({
   name: Yup.string()
@@ -13,8 +12,8 @@ const FeedbackSchema = Yup.object().shape({
     .required("Required"),
   number: Yup.string()
     .matches(
-      /^\+\d{2} \(\d{3}\) \d{3}-\d{2}-\d{2}$/,
-      "Phone number must be in the format +XX (XXX) XXX-XX-XX"
+      /^\+\d{2} \d{3}\ \d{3} \d{2} \d{2}$/,
+      "Phone number must be in the format +xx xxx xxx xx xx"
     )
     .required("Required"),
 });
@@ -26,9 +25,14 @@ export default function ContactForm({
 }) {
   const dispatch = useDispatch();
 
+  const closeModal = () => {
+    dispatch(closeEditModal());
+  };
+
   const handleSubmit = (values, actions) => {
     if (isEditMode) {
       dispatch(updateContact({ contactId, ...values }));
+      closeModal();
     } else {
       dispatch(
         addContact({
@@ -60,11 +64,11 @@ export default function ContactForm({
           type="text"
           name="number"
           id="number"
-          placeholder="+XX (XXX) XXX-XX-XX"
+          placeholder="+xx xxx xxx xx xx"
         ></Field>
         <ErrorMessage className={css.error} name="number" component="div" />
         <button type="submit">
-          {isEditMode ? "Update contact" : "Add contact"}
+          {isEditMode ? "Edit contact" : "Add contact"}
         </button>
       </Form>
     </Formik>

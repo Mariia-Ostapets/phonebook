@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { register, clearError } from "../../redux/auth/operations";
-import css from "./RegisterForm.module.css";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
+import css from "./RegisterForm.module.css";
 
 const initialValues = { name: "", email: "", password: "" };
 
@@ -81,7 +81,9 @@ export const RegisterForm = () => {
           name="password"
           component="div"
         ></ErrorMessage>
-        <button type="submit">Register</button>
+        <button className={css.button} type="submit">
+          Register
+        </button>
       </Form>
     </Formik>
   );

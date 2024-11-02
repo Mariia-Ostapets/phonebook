@@ -5,7 +5,9 @@
 }
 
 .label {
-  margin-bottom: 4px;
+  color: orange;
+  font-weight: 700;
+  text-align: center;
 }
 
 .input {

@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { logIn } from "../../redux/auth/operations";
-import css from "./LoginForm.module.css";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
+import css from "./LoginForm.module.css";
 
 const initialValues = { email: "", password: "" };
 
@@ -66,9 +66,7 @@ export const LoginForm = () => {
           name="password"
           component="div"
         ></ErrorMessage>
-        {error && (
-          <div className={css.errorMessage}>Incorrect email or password</div>
-        )}
+        {error && <div className={css.error}>Incorrect email or password</div>}
         <button type="submit">Log In</button>
       </Form>
     </Formik>
