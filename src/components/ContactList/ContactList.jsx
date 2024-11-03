@@ -1,10 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
 import {
-  selectFilteredContacts,
   openModal,
   closeModal,
   closeEditModal,
 } from "../../redux/contacts/slice";
+import { selectFilteredContacts } from "../../redux/contacts/selectors";
 import { deleteContact } from "../../redux/contacts/operations";
 import { Toaster } from "react-hot-toast";
 import Contact from "../Contact/Contact";

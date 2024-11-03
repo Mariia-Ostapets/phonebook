@@ -1,4 +1,4 @@
-import { createSlice, createSelector } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import {
   fetchContacts,
   addContact,
@@ -6,24 +6,6 @@ import {
   updateContact,
 } from "./operations";
 import { logOut } from "../auth/operations";
-import { selectNameFilter } from "../filters/selectors";
-import { selectContacts } from "./selectors";
-
-export const selectFilteredContacts = createSelector(
-  [selectContacts, selectNameFilter],
-  (contacts, nameFilter) => {
-    if (!nameFilter) {
-      return contacts;
-    }
-    return contacts.filter((contact) => {
-      const nameMatches = contact.name
-        .toLowerCase()
-        .includes(nameFilter.toLowerCase());
-      const numberMatches = contact.number.includes(nameFilter.toLowerCase());
-      return nameMatches || numberMatches;
-    });
-  }
-);
 
 const handlePending = (state) => {
   state.loading = true;
