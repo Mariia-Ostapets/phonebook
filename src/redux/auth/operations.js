@@ -1,7 +1,9 @@
 import axios from "axios";
 import { createAsyncThunk, createAction } from "@reduxjs/toolkit";
 
-axios.defaults.baseURL = "https://connections-api.goit.global";
+// axios.defaults.baseURL = "https://connections-api.goit.global";
+
+axios.defaults.baseURL = "http://localhost:3000";
 
 const setAuthHeader = (token) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
