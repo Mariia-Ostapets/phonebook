@@ -27,9 +27,11 @@ The project is deployed on **Vercel**.
 
 - 🌍 **Live Page:** [Phonebook App](https://goit-react-hw-08-orpin-nu.vercel.app/)
 
+- 🌍 **Backend:** [Live API backend](https://phonebook-api-uuc3.onrender.com/)
+
 ## 📖 Documentation
 
-[API Documentation](https://connections-api.goit.global/docs/)
+[API Documentation](https://phonebook-api-uuc3.onrender.com/api-docs/)
 
 ## 🚀 Deployment
 
