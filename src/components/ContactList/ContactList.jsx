@@ -48,7 +48,8 @@ export default function ContactList() {
     <>
       <ul className={css.contactList}>
         {visibleContacts.map((contact) => (
-          <li key={contact.id}>
+          // <li key={contact.id}>
+          <li key={contact._id}>
             <Contact contact={contact} onDeleteClick={handleDeleteClick} />
           </li>
         ))}

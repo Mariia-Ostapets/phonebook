@@ -10,7 +10,8 @@ export default function Contact({ contact }) {
   const dispatch = useDispatch();
 
   const handleDelete = () => {
-    dispatch(openModal(contact.id));
+    // dispatch(openModal(contact.id));
+    dispatch(openModal(contact._id));
   };
 
   const handleEdit = () => {

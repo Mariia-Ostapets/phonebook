@@ -66,7 +66,8 @@ const contactsSlice = createSlice({
         state.loading = false;
         state.error = null;
         const index = state.items.findIndex(
-          (contact) => contact.id === action.payload.id
+          // (contact) => contact.id === action.payload.id
+          (contact) => contact._id === action.payload._id
         );
         state.items.splice(index, 1);
         state.isModalOpen = false;
@@ -78,7 +79,8 @@ const contactsSlice = createSlice({
         state.loading = false;
         state.error = null;
         const index = state.items.findIndex(
-          (contact) => contact.id === action.payload.id
+          // (contact) => contact.id === action.payload.id
+          (contact) => contact._id === action.payload._id
         );
         if (index !== -1) {
           state.items[index] = action.payload;
